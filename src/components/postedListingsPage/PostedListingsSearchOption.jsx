@@ -6,8 +6,6 @@ const PostedListingsSearchOption = () => {
     const { condition, setCondition, disableOption, setDisableOption, fetchListings, handleReset } = useGlobalContext()
 
     const handleSearchTerm = e => {
-        console.log('handleSearch');
-
         e.preventDefault()
 
         if (condition == undefined || condition.trim().length == 0) return

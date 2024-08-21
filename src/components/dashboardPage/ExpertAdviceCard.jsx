@@ -1,4 +1,6 @@
 import { Link } from "react-router-dom"
+// utils func
+import scrollToTop from "../../utils/scrollToTop"
 // react icons
 import { FaArrowRight, FaRegFolderOpen } from "react-icons/fa"
 
@@ -10,7 +12,7 @@ const ExpertAdviceCard = ({ cardImg, cardMonth }) => {
 
                 {/* image */}
                 <div className="box-image-content mb-5 position-relative overflow-hidden">
-                    <Link to="/blog">
+                    <Link to="/blog" onClick={() => scrollToTop()}>
                         <img src={cardImg} alt="house-img-one" className="box-image img-fluid" />
 
                         <div className="box-image-text fw-bold position-absolute d-flex align-items-center justify-content-center">
@@ -27,7 +29,7 @@ const ExpertAdviceCard = ({ cardImg, cardMonth }) => {
 
                 {/* link */}
                 <div className="box-link">
-                    <Link to="/blog" className="fw-bold d-flex align-items-center justify-content-center">
+                    <Link to="/blog" className="fw-bold d-flex align-items-center justify-content-center" onClick={() => scrollToTop()}>
                         <span className="me-2">
                             Pročitajte više
                         </span>
