@@ -1,16 +1,17 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 // firebase func
 import { collection, query, orderBy, startAfter, limit, getDocs, where } from "firebase/firestore";
 import { db } from "../firebase.config";
 // toastify
 import { toast } from "react-toastify";
 
+
 const usePostedListings = (itemsPerPage) => {
     const [listings, setListings] = useState([]);
     const [lastVisible, setLastVisible] = useState(null);
     const [page, setPage] = useState(0);
 
-    const fetchListings = async (pageNumber = 0, condition = '', reset = false) => {       
+    const fetchListings = useCallback(async (pageNumber = 0, condition = '', reset = false) => {       
         try {            
             let constraints = [
                 orderBy('timestamp', 'desc'),
@@ -52,6 +53,8 @@ const usePostedListings = (itemsPerPage) => {
                         ...constraints,
                         startAfter(lastVisible),
                     );
+                }else{
+                    return
                 }
             }
 
@@ -75,7 +78,7 @@ const usePostedListings = (itemsPerPage) => {
             //error message
             toast.error('Greška prilikom prikazivanja svi objavljenih oglasa, molimo Vas probajte ponovo')
         }
-    };
+    }, [itemsPerPage, lastVisible])
     
     return { listings, fetchListings, page };
 }

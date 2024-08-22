@@ -20,7 +20,7 @@ const PostedListings = () => {
   // Fetch the first page on mount
   useEffect(() => {
     if (condition == undefined) fetchListings();
-  }, []);
+  }, [condition]);
 
   return (
     <div className="posted-listings-page">
