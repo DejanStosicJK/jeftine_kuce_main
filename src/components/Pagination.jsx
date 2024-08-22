@@ -1,6 +1,4 @@
-import { useEffect } from "react"
-// context
-import { useGlobalContext } from "../context.jsx"
+import { useEffect, useState } from "react"
 // utils func 
 import scrollToTop from "../utils/scrollToTop.js"
 // React Icons
@@ -11,7 +9,7 @@ let pointA = 0
 let pointB = 9
 
 const Pagination = ({ dataLength, setDisplayedContent }) => {
-    const {currentPageNumber, setCurrentPageNumber} = useGlobalContext()
+    const [currentPageNumber, setCurrentPageNumber] = useState(1)
 
     useEffect(()=>{
         pointA = 0

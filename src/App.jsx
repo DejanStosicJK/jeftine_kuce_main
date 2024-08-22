@@ -44,7 +44,7 @@ const router = createBrowserRouter([
       {
         path: '/nalog',
         element: <Profile />,
-        loader: userPostedListingsLoader(queryClient)
+        loader: userPostedListingsLoader
       },
       {
         path: '/nalog/:id',

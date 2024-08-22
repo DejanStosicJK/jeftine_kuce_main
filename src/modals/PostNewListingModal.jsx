@@ -92,7 +92,7 @@ const PostNewListingModal = () => {
 
         if (correctImageSize) {
             let imageUrls = await Promise.all(
-                [...propertyImages].map(uploadedImage => storeUploadedImage(uploadedImage))
+                [...propertyImages].map(uploadedImage => storeUploadedImage(uploadedImage, userName, contactEmailAddress))
             ).catch(() => {
                 // spinner
                 setIsLoading(false)

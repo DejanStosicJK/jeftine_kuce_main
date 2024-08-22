@@ -9,15 +9,9 @@ import UserLoggedIn from "../components/profilePage/UserLoggedIn.jsx"
 import UserPostedListingsContainer from "../components/profilePage/UserPostedListingsContainer.jsx"
 
 
-// REACT QUERY
-const fetchUserListingsFromFirebaseQuery = {
-    queryKey: ['allUserPostedListings'],
-    queryFn: () => fetchUserListingsFromFirebase()
-  }
-
 // LOADER
-export const loader = (queryClient) => async () => {
-    const allUserPostedListings = await queryClient.ensureQueryData(fetchUserListingsFromFirebaseQuery)
+export const loader = async () => {
+    const allUserPostedListings = await fetchUserListingsFromFirebase()      
 
     return allUserPostedListings
 }

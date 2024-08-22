@@ -5,7 +5,7 @@ import { toast } from "react-toastify"
 
 const deleteUploadedImageFromDB = async (imageUrl) => {
     const url = new URL(imageUrl);
-    const uploadedImagePath = url.pathname.split('/o/')[1].split('?')[0].replace('%2F', '/');
+    const uploadedImagePath = decodeURIComponent(url.pathname.split('/o/')[1].split('?')[0]);
 
     const storage = getStorage();
 

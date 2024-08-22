@@ -1,12 +1,12 @@
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { useLoaderData } from "react-router-dom"
 // firebase/firestore funcs
 import { doc, deleteDoc } from "firebase/firestore"
 import { db } from "../../firebase.config"
-// context
-import { useGlobalContext } from "../../context.jsx"
 // api func 
 import deleteUploadedImageFromDB from "../../api/deleteUploadedImageFromDB.js"
+// utils func
+import scrollToTop from "../../utils/scrollToTop.js"
 // components
 import AllPostedListingsGridView from "../AllPostedListingsGridView.jsx"
 import Pagination from "../Pagination.jsx"
@@ -17,26 +17,15 @@ import { toast } from "react-toastify"
 const UserPostedListingsContainer = () => {
     const allUserPostedListings = useLoaderData()
 
-    const { setCurrentPageNumber } = useGlobalContext()
-
-    const [userPostedListings, setUserPostedListings] = useState(allUserPostedListings)  
     const [displayedListingsList, setDisplayedListingsList] = useState({
-        totalDataList: null,
-        displayedDataList: null
-    })
-
-    useEffect(() => {
-        setDisplayedListingsList({
-            totalDataList: userPostedListings,
-            displayedDataList: userPostedListings?.length >= 10 ? userPostedListings.slice(0, 9) : userPostedListings
-        })
-        setCurrentPageNumber(1)
-    }, [userPostedListings])
+        totalDataList: allUserPostedListings || [],
+        displayedDataList: allUserPostedListings?.length >= 10 ? allUserPostedListings.slice(0, 9) : allUserPostedListings || []
+    });
 
     const deleteUserPostedListing = async (userPostedListingID) => {
         if (window.confirm('Are you sure you want to delete?')) {
             try {
-                const selectedListing = userPostedListings.filter(listing => listing.id == userPostedListingID)
+                const selectedListing = allUserPostedListings.filter(listing => listing.id == userPostedListingID)
 
                 // delete image/images from storage
                 Array.from(selectedListing[0].data.imageUrls).forEach(imageUrl => {
@@ -46,12 +35,18 @@ const UserPostedListingsContainer = () => {
                 // delete listing from firebase
                 await deleteDoc(doc(db, 'listings', userPostedListingID))
 
-                const updatedListOfUserPostedListings = userPostedListings.filter(listing => listing.id !== userPostedListingID)
+                // update state
+                const updatedListOfUserPostedListings = allUserPostedListings.filter(listing => listing.id !== userPostedListingID)
 
-                setUserPostedListings(updatedListOfUserPostedListings)
+                setDisplayedListingsList({
+                    totalDataList: updatedListOfUserPostedListings,
+                    displayedDataList: updatedListOfUserPostedListings?.length >= 10 ? updatedListOfUserPostedListings.slice(0, 9) : updatedListOfUserPostedListings
+                })
 
                 // success message after listing removal 
                 toast.success('Uspešno ste obrisali Vaš oglas');
+
+                scrollToTop()
             } catch (error) {
                 //error message
                 toast.error('Greška prilikom uklanjanja Vašeg oglasa, molimo Vas probajte ponovo')
@@ -62,7 +57,7 @@ const UserPostedListingsContainer = () => {
     return (
         <>
             <section className="user-posted-listings mb-4">
-                {!userPostedListings || userPostedListings.length == 0 ? (
+                {!displayedListingsList.totalDataList || displayedListingsList.totalDataList.length == 0 ? (
                     <h2 className="fw-bold text-center">
                         Trenutno nemate postavljenih oglasa
                     </h2>
@@ -79,8 +74,8 @@ const UserPostedListingsContainer = () => {
             </section>
 
             {/* Pagination */}
-            {(userPostedListings && userPostedListings?.length >= 10) && (
-                <Pagination dataLength={userPostedListings} setDisplayedContent={setDisplayedListingsList} />
+            {(displayedListingsList.totalDataList && displayedListingsList.totalDataList?.length >= 10) && (
+                <Pagination dataLength={displayedListingsList.totalDataList} setDisplayedContent={setDisplayedListingsList} />
             )}
         </>
     )

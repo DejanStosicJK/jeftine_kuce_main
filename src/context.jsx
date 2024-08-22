@@ -100,9 +100,6 @@ export const AppProvider = ({ children }) => {
         fetchListings()
       } 
 
-    // pagination
-    const [currentPageNumber, setCurrentPageNumber] = useState(1)
-
     return <AppContext.Provider value={{
         userData, //Profile, NavbarUserOnboarding, UserLoggedIn, PostNewListingModal
         logOutUser, // NavbarUserOnboarding, UserLoggedIn
@@ -119,9 +116,6 @@ export const AppProvider = ({ children }) => {
         handleSelectedFilterOption, // FilterOptions
         handleSubmittedFilterOptions, // PostedListingsFilterOptions, DashboardFilterOptions
         handleReset, // PostedListingsFilterOptions, PostedListingsSearchOption
-
-        currentPageNumber, // Pagination
-        setCurrentPageNumber, // Pagination, UserPostedListingsContainer, BlogPostsContainer
     }}>
         {children}
     </AppContext.Provider>

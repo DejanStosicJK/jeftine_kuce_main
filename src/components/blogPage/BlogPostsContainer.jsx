@@ -1,29 +1,16 @@
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { useLoaderData } from "react-router-dom"
-// context
-import { useGlobalContext } from "../../context.jsx"
 // component
 import Pagination from "../Pagination.jsx"
 import AllBlogPostsList from "./AllBlogPostsList.jsx"
 
 
 const BlogPostsContainer = () => {
-    const allBlogPosts = useLoaderData()
-    
-    const { setCurrentPageNumber } = useGlobalContext()
-
+    const allBlogPosts = useLoaderData()  
     const [blogPostsList, setBlogPostsList] = useState({
-        totalDataList: null,
-        displayedDataList: null
-    })
-
-    useEffect(() => {
-        setBlogPostsList({
-            totalDataList: allBlogPosts,
-            displayedDataList: allBlogPosts?.length >= 10 ? allBlogPosts.slice(0, 9) : allBlogPosts
-        })
-        setCurrentPageNumber(1)
-    }, [])
+        totalDataList: allBlogPosts,
+        displayedDataList: allBlogPosts?.length >= 10 ? allBlogPosts.slice(0, 9) : allBlogPosts
+    })    
 
     // Search function
     const handleSearch = e => {
@@ -35,7 +22,6 @@ const BlogPostsContainer = () => {
             totalDataList: searchResults,
             displayedDataList: searchResults.length >= 10 ? searchResults.slice(0, 9) : searchResults
         })
-        setCurrentPageNumber(1)
     }
 
     return (
