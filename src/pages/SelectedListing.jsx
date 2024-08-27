@@ -38,7 +38,7 @@ const SelectedListing = () => {
         scrollToTop()
     }, [])
 
-    const { listingType, propertyType, propertyName, numRooms, numBathrooms, lotNumber, squareFootage, propertyAddress, propertyLocation, propertyDistrict, imageUrls, askingPrice, listingCreated, contactFullName, contactPhoneNumber, contactEmailAddress } = selectedListingDetails
+    const { listingType, propertyType, propertyName, numRooms, numBathrooms, lotNumber, squareFootage, propertyAddress, propertyLocation, propertyDistrict, imageUrls, askingPrice, listingDescription, listingCreated, contactFullName, contactPhoneNumber, contactEmailAddress } = selectedListingDetails
 
     const [imageSrc, setImageSrc] = useState('')
 
@@ -123,6 +123,16 @@ const SelectedListing = () => {
 
                             {/* row item 3 */}
                             <div className="col-12 pb-4 mb-4 border-bottom">
+                                <h5 className="mb-3">
+                                    Opis:
+                                </h5>
+                                <p className='mb-0 fw-bold text-break'>
+                                    {listingDescription}
+                                </p>
+                            </div>
+
+                            {/* row item 4 */}
+                            <div className="col-12 pb-4 mb-4 border-bottom">
                                 <h4 className="mb-3">
                                     Kontakt informacije:
                                 </h4>
@@ -137,7 +147,7 @@ const SelectedListing = () => {
                                 </p>
                             </div>
 
-                            {/* row item 4 */}
+                            {/* row item 5 */}
                             <div className="col-12 mb-4">
                                 <h6 className="text-center text-muted mb-3">
                                     Kliknite na sliku radi bolje preglednosti
